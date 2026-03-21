@@ -11,7 +11,7 @@ namespace School.Application.Core
         }
     }
 
-    // Versión genérica para cuando necesites retornar datos (ej. una lista o un objeto)
+    
     public class ServiceResult<TData> : ServiceResult
     {
         public TData? Data { get; set; }
