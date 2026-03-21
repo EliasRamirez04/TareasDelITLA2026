@@ -1,7 +1,7 @@
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using School.Domain.Entities;
-using School.Infrastructure.Interfaces;
+using School.Application.Contract;       // Nueva referencia
+using School.Application.Dtos.Course;    // Nueva referencia
+using System.Threading.Tasks;
 
 namespace School.Api.Controllers;
 
@@ -9,21 +9,38 @@ namespace School.Api.Controllers;
 [Route("api/[controller]")]
 public class CourseController : ControllerBase
 {
-    private readonly ICourseRepository _repository;
+    // CAMBIO: Ahora inyectamos el SERVICIO, no el repositorio
+    private readonly ICourseService _courseService;
 
-    public CourseController(ICourseRepository repository)
+    public CourseController(ICourseService courseService)
     {
-        _repository = repository;
+        _courseService = courseService;
     }
 
     [HttpGet]
-    public async Task<IActionResult> GetAll() => Ok(await _repository.GetCourses());
+    public async Task<IActionResult> GetAll()
+    {
+        var result = await _courseService.GetCourses();
+        return Ok(result);
+    }
 
     [HttpPost]
-    public async Task<IActionResult> Create(Course course)
+    public async Task<IActionResult> Create(CourseSaveDto courseDto)
     {
-        
-        await _repository.Save(course); 
-        return Ok(new { message = "Curso creado con éxito", data = course });
+        // El API valida automáticamente los DataAnnotations del DTO ([Required], [Range], etc.)
+        if (!ModelState.IsValid)
+        {
+            return BadRequest(ModelState);
+        }
+
+        // Llamamos al servicio de la Capa de Aplicación
+        var result = await _courseService.SaveCourse(courseDto);
+
+        if (!result.Success)
+        {
+            return BadRequest(result);
+        }
+
+        return Ok(result);
     }
 }
