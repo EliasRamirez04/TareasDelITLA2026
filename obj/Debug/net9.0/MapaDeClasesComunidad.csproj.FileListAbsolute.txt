@@ -1,0 +1,4 @@
+C:\Users\Elias\MapaDeClasesComunidad\obj\Debug\net9.0\MapaDeClasesComunidad.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Elias\MapaDeClasesComunidad\obj\Debug\net9.0\MapaDeClasesComunidad.AssemblyInfoInputs.cache
+C:\Users\Elias\MapaDeClasesComunidad\obj\Debug\net9.0\MapaDeClasesComunidad.AssemblyInfo.cs
+C:\Users\Elias\MapaDeClasesComunidad\obj\Debug\net9.0\MapaDeClasesComunidad.csproj.CoreCompileInputs.cache
